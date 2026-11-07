@@ -1,0 +1,187 @@
+namespace ThreeFingerDrag;
+
+internal static partial class PointerSettings
+{
+	private const string ConfigFileName = "ThreeFingerDrag.config.json";
+
+	// Minimum gap between file timestamp checks, in milliseconds.
+
+	// SPI_SETMOUSESPEED: changes the system pointer speed. Valid values are 1 to 20.
+	private const uint SpiSetMouseSpeed = 0x0071;
+	private const int DefaultCursorSpeed = 20;
+	// Windows' stock pointer speed (6/11 in the Control Panel). Used as the 1x reference for multipliers.
+	private const int MinCursorSpeed = 1;
+	private const int MaxCursorSpeed = 20;
+	private const int DefaultWindowPositionSpeed = 5;
+	private const int MinWindowPositionSpeed = 1;
+	private const int MaxWindowPositionSpeed = 100;
+	// Side length in pixels of the square sampled around the cursor. Kept odd so the cursor pixel is the center.
+	private const int DefaultSolidColorDetectionRectangleSize = 5;
+	private const int MinSolidColorDetectionRectangleSize = 1;
+	private const int MaxSolidColorDetectionRectangleSize = 51;
+	private const bool DefaultBringDraggedWindowToForeground = true;
+	private const bool DefaultEnableHitTestDetection = true;
+	private const bool DefaultEnableCursorShapeDetection = true;
+	private const bool DefaultEnableEmptyIBeamWindowDrag = true;
+	// Side length in pixels of the square checked for text when the cursor is an I-beam. Kept odd.
+	private const int DefaultIBeamTextDetectionAreaSize = 51;
+	private const int MinIBeamTextDetectionAreaSize = 1;
+	private const int MaxIBeamTextDetectionAreaSize = 501;
+	private const bool DefaultEnableUiAutomationDetection = true;
+	private const bool DefaultEnableControlClassNameDetection = true;
+	private const bool DefaultEnableSolidColorDetection = true;
+	private const bool DefaultEnableOcrCapture = true;
+	// Durations below are in milliseconds.
+	private const int DefaultOcrHoldDurationMs = 500;
+	private const int MinOcrHoldDurationMs = 150;
+	private const int MaxOcrHoldDurationMs = 3000;
+	// Radius in pixels of the area read by OCR around the cursor.
+	private const int DefaultOcrCaptureRadius = 250;
+	private const int MinOcrCaptureRadius = 50;
+	private const int MaxOcrCaptureRadius = 1000;
+	private const string DefaultOcrLanguageTag = "";
+	// Largest gap between two OCR words, as a percent of their size, that is still joined into one phrase.
+	private const int DefaultOcrMaximumWordGapPercent = 65;
+	internal const int MinOcrMaximumWordGapPercent = 10;
+	internal const int MaxOcrMaximumWordGapPercent = 200;
+	internal const int MinTouchpadDragFingerCount = 2;
+	internal const int MaxTouchpadDragFingerCount = 10;
+	internal const int MinTouchscreenDragFingerCount = 1;
+	internal const int MaxTouchscreenDragFingerCount = 10;
+	internal const int MinWindowMoveStepPixels = 1;
+	internal const int MaxWindowMoveStepPixels = 500;
+	private const bool DefaultOcrCopyToClipboard = false;
+	// Delays after each OCR drop step, in milliseconds, so the target app can react. Slower machines may need more.
+	private const int DefaultOcrActivationDelayMs = 75;
+	private const int DefaultOcrClickDelayMs = 50;
+	private const int DefaultOcrClipboardRestoreDelayMs = 100;
+	internal const int MinOcrDropDelayMs = 0;
+	internal const int MaxOcrDropDelayMs = 2000;
+	private const int DefaultDragFallbackPollIntervalMs = 25;
+	internal const int MinDragFallbackPollIntervalMs = 1;
+	internal const int MaxDragFallbackPollIntervalMs = 1000;
+	private const int DefaultWindowDragSmoothingFrameMs = 8;
+	internal const int MinWindowDragSmoothingFrameMs = 1;
+	internal const int MaxWindowDragSmoothingFrameMs = 100;
+	private const int DefaultWindowDragSmoothingMinTimeConstantMs = 40;
+	internal const int MinWindowDragSmoothingMinTimeConstantMs = 1;
+	internal const int MaxWindowDragSmoothingMinTimeConstantMs = 1000;
+	private const int DefaultWindowDragSmoothingMaxTimeConstantMs = 250;
+	internal const int MinWindowDragSmoothingMaxTimeConstantMs = 1;
+	internal const int MaxWindowDragSmoothingMaxTimeConstantMs = 5000;
+	private const int DefaultWindowDragSmoothingMaxElapsedMs = 50;
+	internal const int MinWindowDragSmoothingMaxElapsedMs = 1;
+	internal const int MaxWindowDragSmoothingMaxElapsedMs = 1000;
+	private const int DefaultSettingsInputDebounceMs = 400;
+	internal const int MinSettingsInputDebounceMs = 0;
+	internal const int MaxSettingsInputDebounceMs = 5000;
+	private const int DefaultSettingsStatIntervalMs = 250;
+	internal const int MinSettingsStatIntervalMs = 10;
+	internal const int MaxSettingsStatIntervalMs = 5000;
+	private const int DefaultNotificationSafetyTimeoutMs = 7000;
+	internal const int MinNotificationSafetyTimeoutMs = 1000;
+	internal const int MaxNotificationSafetyTimeoutMs = 60000;
+	private const int DefaultNotificationBalloonTimeoutMs = 5000;
+	internal const int MinNotificationBalloonTimeoutMs = 1000;
+	internal const int MaxNotificationBalloonTimeoutMs = 60000;
+	private const int DefaultSettingsEventPollIntervalMs = 100;
+	internal const int MinSettingsEventPollIntervalMs = 10;
+	internal const int MaxSettingsEventPollIntervalMs = 5000;
+	private const int DefaultSettingsCaptureRefreshIntervalMs = 25;
+	internal const int MinSettingsCaptureRefreshIntervalMs = 5;
+	internal const int MaxSettingsCaptureRefreshIntervalMs = 1000;
+	private const int DefaultMouseCancelDragPollIntervalMs = 75;
+	internal const int MinMouseCancelDragPollIntervalMs = 10;
+	internal const int MaxMouseCancelDragPollIntervalMs = 1000;
+	private const int DefaultTouchCancelDragPollIntervalMs = 75;
+	internal const int MinTouchCancelDragPollIntervalMs = 10;
+	internal const int MaxTouchCancelDragPollIntervalMs = 1000;
+	private const int DefaultTouchStationaryDragDropHoldMs = 150;
+	internal const int MinTouchStationaryDragDropHoldMs = 0;
+	internal const int MaxTouchStationaryDragDropHoldMs = 2000;
+	private const int DefaultTouchDragDropAnchorGraceMs = 50;
+	internal const int MinTouchDragDropAnchorGraceMs = 0;
+	internal const int MaxTouchDragDropAnchorGraceMs = 1000;
+	private const int DefaultTouchFingerLiftGraceMs = 300;
+	internal const int MinTouchFingerLiftGraceMs = 0;
+	internal const int MaxTouchFingerLiftGraceMs = 2000;
+	private const int DefaultTouchscreenCancelDragPollIntervalMs = 75;
+	internal const int MinTouchscreenCancelDragPollIntervalMs = 10;
+	internal const int MaxTouchscreenCancelDragPollIntervalMs = 1000;
+	private const int DefaultTouchscreenContactLostGraceMs = 300;
+	internal const int MinTouchscreenContactLostGraceMs = 0;
+	internal const int MaxTouchscreenContactLostGraceMs = 2000;
+	private const int DefaultTouchscreenRecentExternalCursorMovementMs = 180;
+	internal const int MinTouchscreenRecentExternalCursorMovementMs = 0;
+	internal const int MaxTouchscreenRecentExternalCursorMovementMs = 2000;
+	private const int DefaultHitTestTimeoutMs = 150;
+	internal const int MinHitTestTimeoutMs = 10;
+	internal const int MaxHitTestTimeoutMs = 5000;
+	private const int DefaultUiAutomationClassifyTimeoutMs = 200;
+	internal const int MinUiAutomationClassifyTimeoutMs = 10;
+	internal const int MaxUiAutomationClassifyTimeoutMs = 5000;
+	private const int DefaultTitleBarHitTestTimeoutMs = 20;
+	internal const int MinTitleBarHitTestTimeoutMs = 1;
+	internal const int MaxTitleBarHitTestTimeoutMs = 1000;
+	private const int DefaultForcedDragModePollIntervalMs = 10;
+	internal const int MinForcedDragModePollIntervalMs = 1;
+	internal const int MaxForcedDragModePollIntervalMs = 1000;
+	private const int DefaultWindowMoveArrowSequenceTimeoutMs = 500;
+	internal const int MinWindowMoveArrowSequenceTimeoutMs = 50;
+	internal const int MaxWindowMoveArrowSequenceTimeoutMs = 5000;
+	private const int DefaultWindowMoveNudgeIntervalMs = 45;
+	internal const int MinWindowMoveNudgeIntervalMs = 1;
+	internal const int MaxWindowMoveNudgeIntervalMs = 1000;
+	private const bool DefaultShowSolidColorDetectionRectangle = false;
+	private const int DefaultSolidColorDetectionRectangleDisplayMs = 500;
+	private const bool DefaultShowDragModeIndicator = false;
+	private const bool DefaultShowDragModeIndicatorDetails = false;
+	private const bool DefaultShowTouchHoldForceWindowDragIndicator = false;
+
+	private const int DefaultTouchHoldForceWindowDragIndicatorDisplayMs = 900;
+	private const int DefaultDragModeIndicatorDiameter = 14;
+	private const int MinDragModeIndicatorDiameter = 6;
+	private const int MaxDragModeIndicatorDiameter = 80;
+	private const int DefaultDragModeIndicatorDisplayMs = 900;
+	private const int MinOverlayDisplayMs = 100;
+	private const int MaxOverlayDisplayMs = 5000;
+	private const string DefaultForceWindowDragKey = "LControl";
+	private const string DefaultForceNonWindowDragKey = "RControl";
+	private const string DefaultDragModeSwitcherShortcut = "LControl+LAlt+W";
+	private const bool DefaultEnableForcedModeToggleSound = true;
+	private const int DefaultTouchpadDragFingerCount = 3;
+	private const int DefaultTouchscreenFingerCount = 3;
+	private const string DefaultTouchDragButtons = "Left";
+	private const string DefaultMouseDragTriggerButton = "Secondary";
+	// 0 disables the lock. Otherwise the cursor stays at the trigger press point for this many milliseconds.
+	private const string DefaultWindowMoveModifierKey = "LAlt";
+	private const int DefaultWindowMoveStepPixels = 24;
+	private const bool DefaultEnableTouchHoldForceWindowDrag = true;
+	private const int DefaultDragHoldDurationMs = 1000;
+	private const int MinDragHoldDurationMs = 500;
+	private const int MaxDragHoldDurationMs = 10000;
+	private const bool DefaultEnableClickHoldForceWindowDrag = true;
+	private const bool DefaultEnableStylus = false;
+	private const bool DefaultEnableStylusHoldForceWindowDrag = true;
+	private const string DefaultTouchpadCancelDragKey = "Escape";
+	private const int DefaultDragDropAnchorHoldMs = 150;
+	private const int MinDragDropAnchorHoldMs = 50;
+	private const int MaxDragDropAnchorHoldMs = 1000;
+	private const int DefaultPostLiftAnchorGraceMs = 180;
+	private const int MinPostLiftAnchorGraceMs = 50;
+	private const int MaxPostLiftAnchorGraceMs = 1000;
+	private const bool DefaultEnableFlickToDrop = true;
+	private const int DefaultFlickToDropVelocityThreshold = 18;
+	private const int MinFlickToDropVelocityThreshold = 6;
+	private const int MaxFlickToDropVelocityThreshold = 100;
+	private const int DefaultNaturalDragReleaseThreshold = 5;
+	private const int MinNaturalDragReleaseThreshold = 2;
+	private const int MaxNaturalDragReleaseThreshold = 30;
+	private const int DefaultCursorPositionPollingIntervalMs = 1;
+	private const bool DefaultEnableDiagnosticLog = false;
+	private const bool DefaultEnableSplitDiagnosticLogs = false;
+	private const bool DefaultKeepWindowWithinScreen = true;
+	private const int MinCursorPositionPollingIntervalMs = 1;
+	private const int MaxCursorPositionPollingIntervalMs = 1000;
+	private const bool DefaultEnableDragReleaseSound = true;
+}

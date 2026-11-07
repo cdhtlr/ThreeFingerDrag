@@ -1,0 +1,104 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Configuration>Release</Configuration>
+    <OutputType>WinExe</OutputType>
+    <!-- .NET SDK does not accept 10.0.14393 as a TFM version, so build against the lowest
+         recognized Windows SDK and declare 1607 as the minimum supported OS. -->
+    <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.14393.0</SupportedOSPlatformVersion>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <InformationalVersion>1.0.0</InformationalVersion>
+    <Authors>Sidik Hadi Kurniadi</Authors>
+    <Company>Sidik Hadi Kurniadi</Company>
+    <Product>ThreeFingerDrag</Product>
+    <Description>Multi-finger drag utility for Windows.</Description>
+    <Copyright>Copyright © 2026 Sidik Hadi Kurniadi</Copyright>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>12.0</LangVersion>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseWindowsForms>true</UseWindowsForms>
+    <!-- Per-monitor DPI awareness so WinForms scales correctly on mixed-DPI setups. -->
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <Platforms>x64;x86;ARM64</Platforms>
+    <RuntimeIdentifiers>win-x64;win-x86;win-arm64</RuntimeIdentifiers>
+    <Platform Condition="'$(Platform)' == '' or '$(Platform)' == 'AnyCPU'">x64</Platform>
+    <PlatformTarget Condition="'$(Platform)' == 'x86'">x86</PlatformTarget>
+    <PlatformTarget Condition="'$(Platform)' == 'ARM64'">ARM64</PlatformTarget>
+    <PlatformTarget Condition="'$(Platform)' == 'x64'">x64</PlatformTarget>
+    <ApplicationIcon>Logo.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <!-- Lets the version-qualified Windows TFM above (needed for the Windows.Media.Ocr WinRT
+         projection) build on non-Windows machines/CI as well; it is a no-op on real Windows. -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <!-- Required for IDE0005 (remove unnecessary usings) to run during build. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
+    <PackageReference Include="RawInput.Sharp" Version="0.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../LICENSE" Link="LICENSE" Pack="true" PackagePath="" />
+    <None Include="../THIRD-PARTY-NOTICES.md" Link="THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="" />
+    <None Include="../README.md" Link="README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ThreeFingerDrag.config.json" LogicalName="ThreeFingerDrag.config.json" />
+    <EmbeddedResource Include="Languages/*.json" LogicalName="ThreeFingerDrag.Languages.%(Filename)%(Extension)" />
+    <None Update="Languages/**/*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ThreeFingerDrag.config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <UsingTask TaskName="GenerateIcoFromPng" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <PngPath ParameterType="System.String" Required="true" />
+      <IcoPath ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.IO" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        var pngBytes = File.ReadAllBytes(PngPath);
+        var iconDirectory = Path.GetDirectoryName(IcoPath);
+        if (!string.IsNullOrEmpty(iconDirectory))
+        {
+            Directory.CreateDirectory(iconDirectory);
+        }
+
+        using var stream = File.Create(IcoPath);
+        using var writer = new BinaryWriter(stream);
+        writer.Write((ushort)0);
+        writer.Write((ushort)1);
+        writer.Write((ushort)1);
+        writer.Write((byte)0);
+        writer.Write((byte)0);
+        writer.Write((byte)0);
+        writer.Write((byte)0);
+        writer.Write((ushort)1);
+        writer.Write((ushort)32);
+        writer.Write((uint)pngBytes.Length);
+        writer.Write((uint)22);
+        writer.Write(pngBytes);
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="GenerateApplicationIcon" BeforeTargets="CoreCompile" Inputs="$(MSBuildProjectDirectory)/Logo.png" Outputs="$(MSBuildProjectDirectory)/Logo.ico">
+    <GenerateIcoFromPng PngPath="$(MSBuildProjectDirectory)/Logo.png" IcoPath="$(MSBuildProjectDirectory)/Logo.ico" />
+  </Target>
+</Project>

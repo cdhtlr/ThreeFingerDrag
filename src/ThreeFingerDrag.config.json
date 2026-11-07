@@ -1,0 +1,318 @@
+{
+  "useTabbedSettings": true,
+  "useAdvancedSettings": false,
+  "settingsSectionOrder": [
+    "global",
+    "detection",
+    "indicators",
+    "ocr",
+    "touch",
+    "mouse",
+    "stylus",
+    "clickLock",
+    "keyboard",
+    "windowDragSmoothing",
+    "advancedSettings",
+    "logging"
+  ],
+  "global": {
+    "dragFallbackPollIntervalMs": 25,
+    "windowDragSmoothingFrameMs": 8,
+    "windowDragSmoothingMinTimeConstantMs": 40,
+    "windowDragSmoothingMaxTimeConstantMs": 250,
+    "windowDragSmoothingMaxElapsedMs": 50,
+    "settingsInputDebounceMs": 400,
+    "settingsStatIntervalMs": 250,
+    "notificationSafetyTimeoutMs": 7000,
+    "notificationBalloonTimeoutMs": 5000,
+    "settingsEventPollIntervalMs": 100,
+    "settingsCaptureRefreshIntervalMs": 25,
+    "cursorSpeed": 20,
+    "windowPositionSpeed": 5,
+    "cursorPositionPollingIntervalMs": 1,
+    "bringDraggedWindowToForeground": true,
+    "keepWindowWithinScreen": true,
+    "dragHoldDurationMs": 1000,
+    "dragCancelKey": "Escape",
+    "forceWindowDragKey": "LControl",
+    "forceNonWindowDragKey": "RControl",
+    "dragModeSwitcherShortcut": "LControl+LAlt+W",
+    "enableTouchFlickToDrop": true,
+    "touchFlickToDropVelocityThreshold": 18,
+    "touchpadNaturalDragReleaseThreshold": 5,
+    "touchpadDragDropAnchorHoldMs": 150,
+    "touchpadPostLiftAnchorGraceMs": 180,
+    "enableDragReleaseSound": true,
+    "enableForcedModeToggleSound": true
+  },
+  "logging": {
+    "enableDiagnosticLog": false,
+    "enableSplitDiagnosticLogs": false
+  },
+  "detection": {
+    "hitTestTimeoutMs": 150,
+    "uiAutomationClassifyTimeoutMs": 200,
+    "titleBarHitTestTimeoutMs": 20,
+    "enableSolidColorDetection": true,
+    "enableUiAutomationDetection": true,
+    "enableOcrCapture": true,
+    "enableCursorShapeDetection": true,
+    "enableEmptyIBeamWindowDrag": true,
+    "enableControlClassNameDetection": true,
+    "enableHitTestDetection": true,
+    "iBeamTextDetectionAreaSize": 51,
+    "solidColorDetectionRectangleSize": 5
+  },
+  "indicators": {
+    "showTouchHoldForceWindowDragIndicator": false,
+    "touchHoldForceWindowDragIndicatorDisplayMs": 900,
+    "showDragModeIndicator": false,
+    "dragModeIndicatorDiameter": 14,
+    "dragModeIndicatorDisplayMs": 900,
+    "windowDragIndicatorColor": "#4060FF",
+    "otherDragIndicatorColor": "#FF4040",
+    "activeWindowDragIndicatorColor": "#FF00FF",
+    "windowPositionFallbackIndicatorColor": "#800080",
+    "touchHoldForceWindowDragIndicatorColor": "#00C8C8",
+    "showSolidColorDetectionRectangle": false,
+    "solidColorUniformBorderColor": "#40C878",
+    "solidColorMixedBorderColor": "#FFB020",
+    "solidColorDetectionRectangleDisplayMs": 500,
+    "showDragModeIndicatorDetails": false,
+    "indicatorPanelBackgroundColor": "#202020",
+    "indicatorPanelTextColor": "#FFFFFF"
+  },
+  "ocr": {
+    "ocrHoldDurationMs": 500,
+    "ocrCaptureRadius": 250,
+    "ocrLanguageTag": "",
+    "ocrMaximumWordGapPercent": 65,
+    "ocrCopyToClipboard": false,
+    "ocrActivationDelayMs": 75,
+    "ocrClickDelayMs": 50,
+    "ocrClipboardRestoreDelayMs": 100
+  },
+  "touch": {
+    "touchCancelDragPollIntervalMs": 75,
+    "touchStationaryDragDropHoldMs": 150,
+    "touchDragDropAnchorGraceMs": 50,
+    "touchFingerLiftGraceMs": 300,
+    "touchscreenCancelDragPollIntervalMs": 75,
+    "touchscreenContactLostGraceMs": 300,
+    "touchscreenRecentExternalCursorMovementMs": 180,
+    "touchpadDragFingerCount": 3,
+    "touchscreenDragFingerCount": 3,
+    "enableTouchHoldForceWindowDrag": true,
+    "touchDragButtons": "Left"
+  },
+  "mouse": {
+    "mouseCancelDragPollIntervalMs": 75,
+    "mouseDragTriggerButton": "Secondary",
+    "enableClickHoldForceWindowDrag": true
+  },
+  "stylus": {
+    "enableStylus": false,
+    "enableStylusHoldForceWindowDrag": true
+  },
+  "keyboard": {
+    "forcedDragModePollIntervalMs": 10,
+    "windowMoveArrowSequenceTimeoutMs": 500,
+    "windowMoveNudgeIntervalMs": 45,
+    "windowMoveModifierKey": "LAlt",
+    "windowMoveStepPixels": 24
+  },
+  "numericValueBounds": {
+    "dragFallbackPollIntervalMs": {
+      "min": 1,
+      "max": 1000
+    },
+    "windowDragSmoothingFrameMs": {
+      "min": 1,
+      "max": 100
+    },
+    "windowDragSmoothingMinTimeConstantMs": {
+      "min": 1,
+      "max": 1000
+    },
+    "windowDragSmoothingMaxTimeConstantMs": {
+      "min": 1,
+      "max": 5000
+    },
+    "windowDragSmoothingMaxElapsedMs": {
+      "min": 1,
+      "max": 1000
+    },
+    "settingsInputDebounceMs": {
+      "min": 0,
+      "max": 5000
+    },
+    "notificationSafetyTimeoutMs": {
+      "min": 1000,
+      "max": 60000
+    },
+    "notificationBalloonTimeoutMs": {
+      "min": 1000,
+      "max": 60000
+    },
+    "settingsEventPollIntervalMs": {
+      "min": 10,
+      "max": 5000
+    },
+    "settingsCaptureRefreshIntervalMs": {
+      "min": 5,
+      "max": 1000
+    },
+    "settingsStatIntervalMs": {
+      "min": 10,
+      "max": 5000
+    },
+    "mouseCancelDragPollIntervalMs": {
+      "min": 10,
+      "max": 1000
+    },
+    "touchCancelDragPollIntervalMs": {
+      "min": 10,
+      "max": 1000
+    },
+    "touchStationaryDragDropHoldMs": {
+      "min": 0,
+      "max": 2000
+    },
+    "touchDragDropAnchorGraceMs": {
+      "min": 0,
+      "max": 1000
+    },
+    "touchFingerLiftGraceMs": {
+      "min": 0,
+      "max": 2000
+    },
+    "touchscreenCancelDragPollIntervalMs": {
+      "min": 10,
+      "max": 1000
+    },
+    "touchscreenContactLostGraceMs": {
+      "min": 0,
+      "max": 2000
+    },
+    "touchscreenRecentExternalCursorMovementMs": {
+      "min": 0,
+      "max": 2000
+    },
+    "hitTestTimeoutMs": {
+      "min": 10,
+      "max": 5000
+    },
+    "uiAutomationClassifyTimeoutMs": {
+      "min": 10,
+      "max": 5000
+    },
+    "titleBarHitTestTimeoutMs": {
+      "min": 1,
+      "max": 1000
+    },
+    "forcedDragModePollIntervalMs": {
+      "min": 1,
+      "max": 1000
+    },
+    "windowMoveArrowSequenceTimeoutMs": {
+      "min": 50,
+      "max": 5000
+    },
+    "windowMoveNudgeIntervalMs": {
+      "min": 1,
+      "max": 1000
+    },
+    "cursorSpeed": {
+      "min": 1,
+      "max": 20
+    },
+    "windowPositionSpeed": {
+      "min": 1,
+      "max": 100
+    },
+    "cursorPositionPollingIntervalMs": {
+      "min": 1,
+      "max": 1000
+    },
+    "dragHoldDurationMs": {
+      "min": 500,
+      "max": 10000
+    },
+    "touchFlickToDropVelocityThreshold": {
+      "min": 6,
+      "max": 100
+    },
+    "touchpadNaturalDragReleaseThreshold": {
+      "min": 2,
+      "max": 30
+    },
+    "touchpadDragDropAnchorHoldMs": {
+      "min": 50,
+      "max": 1000
+    },
+    "touchpadPostLiftAnchorGraceMs": {
+      "min": 50,
+      "max": 1000
+    },
+    "ocrHoldDurationMs": {
+      "min": 150,
+      "max": 3000
+    },
+    "ocrCaptureRadius": {
+      "min": 50,
+      "max": 1000
+    },
+    "ocrMaximumWordGapPercent": {
+      "min": 10,
+      "max": 200
+    },
+    "ocrActivationDelayMs": {
+      "min": 0,
+      "max": 2000
+    },
+    "ocrClickDelayMs": {
+      "min": 0,
+      "max": 2000
+    },
+    "ocrClipboardRestoreDelayMs": {
+      "min": 0,
+      "max": 2000
+    },
+    "iBeamTextDetectionAreaSize": {
+      "min": 1,
+      "max": 501
+    },
+    "solidColorDetectionRectangleSize": {
+      "min": 1,
+      "max": 51
+    },
+    "touchHoldForceWindowDragIndicatorDisplayMs": {
+      "min": 100,
+      "max": 5000
+    },
+    "dragModeIndicatorDiameter": {
+      "min": 6,
+      "max": 80
+    },
+    "dragModeIndicatorDisplayMs": {
+      "min": 100,
+      "max": 5000
+    },
+    "solidColorDetectionRectangleDisplayMs": {
+      "min": 100,
+      "max": 5000
+    },
+    "touchpadDragFingerCount": {
+      "min": 2,
+      "max": 10
+    },
+    "touchscreenDragFingerCount": {
+      "min": 1,
+      "max": 10
+    },
+    "windowMoveStepPixels": {
+      "min": 1,
+      "max": 500
+    }
+  }
+}
